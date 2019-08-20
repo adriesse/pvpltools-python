@@ -1,0 +1,47 @@
+# This file contains three sections separated by two blank lines.
+# The first section contains meta data, which can be parsed with yaml.
+# The second and third sections contain data column definitions
+# and data respectively, both formatted as csv tables.
+
+name: CIGS8-001
+technology: CIGS
+data source: CFV Solar
+temperatures: [15, 25, 50, 65]
+irradiances: [100, 200, 400, 600, 800, 1000, 1100]
+
+
+Column,Units,dtype
+
+RowNumber,None,int64
+Date,None,datetime64[ns]
+T,C,int64
+G,W/m2,int64
+Isc,A,float64
+Voc,V,float64
+Imp,A,float64
+Vmp,V,float64
+Pmax,W,float64
+source,None,object
+corr,None,bool
+
+
+RowNumber,Date,T,G,Isc,Voc,Imp,Vmp,Pmax,source,corr
+
+0,2014-04-28 16:43:04,15,100,0.256,36.74,0.2,27.56,5.52,CFV,True
+2,2014-04-28 16:42:14,15,200,0.51,38.96,0.421,30.31,12.77,CFV,True
+1,2014-04-18 13:47:20,25,100,0.257,34.06,0.174,23.55,4.09,CFV,True
+3,2014-04-18 13:44:19,25,200,0.511,37.45,0.377,28.1,10.58,CFV,True
+4,2014-04-18 13:40:08,25,400,1.017,39.83,0.811,31.09,25.23,CFV,True
+6,2014-04-18 13:36:58,25,600,1.523,40.97,1.254,32.04,40.17,CFV,True
+9,2014-04-18 13:33:17,25,800,2.028,41.7,1.7,32.44,55.14,CFV,True
+12,2014-04-18 13:52:52,25,1000,2.53,42.23,2.153,32.54,70.06,CFV,True
+15,2014-04-18 13:59:48,25,1100,2.781,42.43,2.378,32.55,77.4,CFV,True
+5,2014-04-28 14:48:24,50,400,1.02,36.15,0.853,27.96,23.85,CFV,True
+7,2014-04-28 14:43:53,50,600,1.533,37.23,1.304,28.6,37.28,CFV,True
+10,2014-04-28 14:38:03,50,800,2.047,37.95,1.757,28.88,50.76,CFV,True
+13,2014-04-28 14:31:02,50,1000,2.553,38.46,2.202,28.9,63.65,CFV,True
+16,2014-04-28 14:54:15,50,1100,2.81,38.63,2.43,28.84,70.09,CFV,True
+8,2014-04-28 15:39:04,65,600,1.532,35.01,1.299,26.59,34.54,CFV,True
+11,2014-04-28 15:35:40,65,800,2.042,35.77,1.746,26.87,46.91,CFV,True
+14,2014-04-28 15:30:33,65,1000,2.553,36.35,2.191,27.0,59.17,CFV,True
+17,2014-04-28 15:26:08,65,1100,2.813,36.6,2.41,27.08,65.27,CFV,True
