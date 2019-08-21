@@ -1,0 +1,126 @@
+﻿#     This file bundles tabular data and corresponding metadata.
+#     There are three sections separated by pairs of blank lines:
+# 
+#         1. metadata in yaml format
+#         2. column definitions as a csv table
+#         3. data columns as a csv table
+# 
+#     Software to read this file can be found at:
+# 
+#         https://github.com/adriesse/pvpltools-python
+# 
+#     Data in this file were collected by NREL, Sandia Labs and
+#     CFV Solar during 2012-2014; published by NREL in 2014; and
+#     repackaged by Anton Driesse, PV Performance Labs in 2019.
+#     
+
+name: CIGS1-001
+source: NREL mPERT data set
+source_files:
+- CharacterDataForPVModels 9-26-14.xlsx
+- SandiaModelCoefficients.xlsx
+source_notes:
+  PV Module: CIGS1-001
+  Technology: Copper indium gallium selenide
+  Construction: Glass front/Glass back
+  Deployment: Golden, CO - August 14, 2012 through September 24, 2013.
+  History: Previously deployed for 16 months in Golden, CO
+  Footnotes:
+  - 1. Measured with a h.a.l.m. flash solar simulator
+  - 2. Because of equipment limitations the maximum temperature for measurements was
+    65°C instead of 75°C
+  - 3. Measurements for 15°C and irradiances of 400, 600, 800, and 1000 W/m2 were
+    not performed because of equipment limitations and infrequent occurrence of those
+    conditions at the Cocoa, Eugene, and Golden sites.
+  - 4. Raw Isc and Imp data corrected for temperature and irradiance using equation
+    1 of  IEC 60891, raw Voc and Vmp corrected for temperature
+  - '5. Uncertainty for crystalline silicon modules: Pm = ± 2.8%,  Isc = ± 2.3%, Imp
+    = ± 2.3%, Voc = ± 0.3%, Vmp = ± 0.7%'
+  - 6. With module open-circuited, preconditioning outdoor irradiance of 5.82 kWh/m2
+    starting on 1/21/2014 at 16:45 PM and ending on 1/23/2014 at 12:35 PM
+  - 7. Measurements on 12/16/2013 and before the preconditioning irradiance provided
+    a Pm at STC of 70.9 W.
+temp_coeffs:
+  alpha_sc: 0.01026
+  alpha_mp: -0.031
+  beta_oc: -0.317
+  beta_mp: -0.368
+  gamma_mp: -0.394
+sapm_params:
+  Vintage: ''
+  Area: 0.729
+  Material: ''
+  Cells_in_Series: 66
+  Parallel_Strings: 2
+  Isco: 2.45681
+  Voco: 43.3305
+  Impo: 2.1877
+  Vmpo: 34.362
+  Aisc: 0.000131
+  Aimp: -0.000308
+  C0: 0.965083
+  C1: 0.0349166
+  Bvoco: -0.132858
+  Mbvoc: 0
+  Bvmpo: -0.129492
+  Mbvmp: 0
+  N: 1.4431
+  C2: 0.0642704
+  C3: -11.1794
+  A0: 0.924668
+  A1: 0.0693256
+  A2: -0.0145897
+  A3: 0.00145912
+  A4: -6.31822e-05
+  B0: 1
+  B1: -0.00396983
+  B2: 0.000492756
+  B3: -2.0379e-05
+  B4: 3.36574e-07
+  B5: -2.05321e-09
+  DTC: 3
+  FD: 1
+  A: -3.31924
+  B: -0.103041
+  C4: 0.979407
+  C5: 0.0205933
+  IXO: 2.41008
+  IXXO: 1.58093
+  C6: 1.07198
+  C7: -0.0719802
+  Notes: Measured at Sandia Labs
+
+
+column,dtype,units
+
+seqno,int64,
+date,datetime64[ns],
+temperature,int64,°C
+irradiance,int64,W/m²
+i_sc,float64,A
+v_oc,float64,V
+i_mp,float64,A
+v_mp,float64,V
+p_mp,float64,W
+
+
+seqno,date,temperature,irradiance,i_sc,v_oc,i_mp,v_mp,p_mp
+
+0,2014-01-23 19:33:17,15,100,0.253,37.33,0.207,29.2,6.04
+1,2014-01-23 19:32:22,15,200,0.503,39.1,0.419,31.1,13.02
+2,2014-01-23 14:12:09,25,100,0.253,36.43,0.201,28.63,5.77
+3,2014-01-23 14:08:18,25,200,0.503,38.41,0.424,30.74,13.02
+4,2014-01-23 14:03:25,25,400,1.006,40.19,0.873,32.25,28.17
+5,2014-01-23 13:59:56,25,600,1.506,41.13,1.323,32.83,43.44
+6,2014-01-23 13:53:50,25,800,2.005,41.78,1.771,33.08,58.58
+7,2014-01-23 13:26:09,25,1000,2.505,42.29,2.223,33.13,73.66
+8,2014-01-23 13:39:30,25,1100,2.753,42.45,2.442,33.09,80.79
+9,2014-01-23 17:47:45,50,400,1.003,36.37,0.866,28.62,24.8
+10,2014-01-23 17:44:41,50,600,1.505,37.33,1.315,29.15,38.33
+11,2014-01-23 17:41:29,50,800,2.007,37.94,1.763,29.31,51.67
+12,2014-01-23 17:38:03,50,1000,2.51,38.36,2.209,29.29,64.7
+13,2014-01-23 17:52:27,50,1100,2.761,38.74,2.427,29.44,71.46
+14,2014-01-23 18:50:52,65,600,1.509,34.78,1.309,26.69,34.94
+15,2014-01-23 18:46:59,65,800,2.01,35.49,1.749,26.97,47.18
+16,2014-01-23 18:42:59,65,1000,2.514,36.01,2.188,27.07,59.22
+17,2014-01-23 18:39:51,65,1100,2.768,36.23,2.413,27.0,65.16

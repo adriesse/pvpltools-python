@@ -1,0 +1,126 @@
+﻿#     This file bundles tabular data and corresponding metadata.
+#     There are three sections separated by pairs of blank lines:
+# 
+#         1. metadata in yaml format
+#         2. column definitions as a csv table
+#         3. data columns as a csv table
+# 
+#     Software to read this file can be found at:
+# 
+#         https://github.com/adriesse/pvpltools-python
+# 
+#     Data in this file were collected by NREL, Sandia Labs and
+#     CFV Solar during 2012-2014; published by NREL in 2014; and
+#     repackaged by Anton Driesse, PV Performance Labs in 2019.
+#     
+
+name: CdTe75669
+source: NREL mPERT data set
+source_files:
+- CharacterDataForPVModels 9-26-14.xlsx
+- SandiaModelCoefficients.xlsx
+source_notes:
+  PV Module: CdTe75669
+  Technology: Cadmium telluride
+  Construction: Glass front/Glass back
+  Deployment: Golden, CO - August 14, 2012 through September 24, 2013.
+  History: Previously deployed for 52 months in Golden, CO
+  Footnotes:
+  - 1. Measured with a h.a.l.m. flash solar simulator
+  - 2. Because of equipment limitations the maximum temperature for measurements was
+    65°C instead of 75°C
+  - 3. Measurements for 15°C and irradiances of 400, 600, 800, and 1000 W/m2 were
+    not performed because of equipment limitations and infrequent occurrence of those
+    conditions at the Cocoa, Eugene, and Golden sites.
+  - 4. Raw Isc and Imp data corrected for temperature and irradiance using equation
+    1 of  IEC 60891, raw Voc and Vmp corrected for temperature
+  - '5. Uncertainty for crystalline silicon modules: Pm = ± 2.8%,  Isc = ± 2.3%, Imp
+    = ± 2.3%, Voc = ± 0.3%, Vmp = ± 0.7%'
+  - 6. With module open-circuited, preconditioning outdoor irradiance of 4.52 kWh/m2
+    starting on 1/23/2014 at 1:00 PM and ending on 1/24/2014 at 9:35 AM
+  - 7. Measurements on 12/16/2013 and before the preconditioning irradiance provided
+    a Pm at STC of 65.4 W.
+temp_coeffs:
+  alpha_sc: 0.03884
+  alpha_mp: 0.037
+  beta_oc: -0.231
+  beta_mp: -0.247
+  gamma_mp: -0.214
+sapm_params:
+  Vintage: ''
+  Area: 0.72
+  Material: ''
+  Cells_in_Series: 116
+  Parallel_Strings: 1
+  Isco: 1.14486
+  Voco: 89.1527
+  Impo: 0.973822
+  Vmpo: 64.8687
+  Aisc: 0.00051
+  Aimp: 0.000297
+  C0: 1.00451
+  C1: -0.00450815
+  Bvoco: -0.214484
+  Mbvoc: 0
+  Bvmpo: -0.166692
+  Mbvmp: 0
+  N: 1.3755
+  C2: -0.858319
+  C3: -16.5873
+  A0: 0.98759
+  A1: 0.0146729
+  A2: -0.00392431
+  A3: 9.74534e-05
+  A4: -2.81067e-06
+  B0: 1
+  B1: -0.0031595
+  B2: 0.000414457
+  B3: -1.74094e-05
+  B4: 2.87086e-07
+  B5: -1.74838e-09
+  DTC: 3
+  FD: 1
+  A: -3.26212
+  B: -0.0915299
+  C4: 1.00243
+  C5: -0.00242744
+  IXO: 1.10271
+  IXXO: 0.65196
+  C6: 1.12049
+  C7: -0.120492
+  Notes: Measured at Sandia Labs
+
+
+column,dtype,units
+
+seqno,int64,
+date,datetime64[ns],
+temperature,int64,°C
+irradiance,int64,W/m²
+i_sc,float64,A
+v_oc,float64,V
+i_mp,float64,A
+v_mp,float64,V
+p_mp,float64,W
+
+
+seqno,date,temperature,irradiance,i_sc,v_oc,i_mp,v_mp,p_mp
+
+0,2014-01-24 15:03:21,15,100,0.105,80.74,0.082,62.03,5.11
+1,2014-01-24 15:02:30,15,200,0.217,83.91,0.178,65.87,11.73
+2,2014-01-24 11:46:58,25,100,0.107,76.74,0.083,59.31,4.93
+3,2014-01-24 11:42:12,25,200,0.221,80.3,0.181,62.76,11.35
+4,2014-01-24 11:37:24,25,400,0.457,83.23,0.385,64.12,24.67
+5,2014-01-24 11:31:28,25,600,0.699,84.71,0.592,63.75,37.73
+6,2014-01-24 11:16:19,25,800,0.944,85.67,0.796,63.13,50.27
+7,2014-01-24 11:01:22,25,1000,1.192,86.33,1.003,62.17,62.35
+8,2014-01-24 11:59:59,25,1100,1.318,86.58,1.106,61.78,68.31
+9,2014-01-24 13:26:25,50,400,0.462,77.43,0.394,59.57,23.46
+10,2014-01-24 13:23:05,50,600,0.707,79.22,0.606,59.7,36.15
+11,2014-01-24 13:19:30,50,800,0.958,80.29,0.817,59.19,48.37
+12,2014-01-24 13:15:38,50,1000,1.211,80.99,1.028,58.3,59.93
+13,2014-01-24 13:32:38,50,1100,1.336,81.52,1.13,58.15,65.69
+14,2014-01-24 14:25:23,65,600,0.711,76.05,0.612,57.29,35.08
+15,2014-01-24 14:22:25,65,800,0.962,77.4,0.827,56.98,47.11
+16,2014-01-24 14:18:50,65,1000,1.215,78.43,1.038,56.54,58.67
+17,2014-01-24 14:13:36,65,1100,1.343,79.01,1.146,56.19,64.39

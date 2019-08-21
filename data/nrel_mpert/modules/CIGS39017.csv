@@ -1,0 +1,132 @@
+﻿#     This file bundles tabular data and corresponding metadata.
+#     There are three sections separated by pairs of blank lines:
+# 
+#         1. metadata in yaml format
+#         2. column definitions as a csv table
+#         3. data columns as a csv table
+# 
+#     Software to read this file can be found at:
+# 
+#         https://github.com/adriesse/pvpltools-python
+# 
+#     Data in this file were collected by NREL, Sandia Labs and
+#     CFV Solar during 2012-2014; published by NREL in 2014; and
+#     repackaged by Anton Driesse, PV Performance Labs in 2019.
+#     
+
+name: CIGS39017
+source: NREL mPERT data set
+source_files:
+- CharacterDataForPVModels 9-26-14.xlsx
+- SandiaModelCoefficients.xlsx
+source_notes:
+  PV Module: CIGS39017
+  Technology: Copper indium gallium selenide
+  Construction: Glass front/Tedlar back
+  Deployment: Cocoa, FL - January 21, 2011 through March 4, 2012; and  Eugene, OR
+    - December 20, 2012 through January 20, 2014
+  History: Previously deployed for 14 months in Golden, CO
+  Footnotes:
+  - 1. Measured with a h.a.l.m. flash solar simulator
+  - 2. Because of equipment limitations the maximum temperature for measurements was
+    65°C instead of 75°C
+  - 3. Measurements for 15°C and irradiances of 400, 600, 800, and 1000 W/m2 were
+    not performed because of equipment limitations and infrequent occurrence of those
+    conditions at the Cocoa, Eugene, and Golden sites.
+  - 4. Raw Isc and Imp data corrected for temperature and irradiance using equation
+    1 of  IEC 60891, raw Voc and Vmp corrected for temperature
+  - '5. Uncertainty for crystalline silicon modules: Pm = ± 2.8%,  Isc = ± 2.3%, Imp
+    = ± 2.3%, Voc = ± 0.3%, Vmp = ± 0.7%'
+  - 6. With module open-circuited, preconditioning outdoor irradiance of 5.12 kWh/m2
+    starting on 4/17/2014 at 3:32 PM and ending on 4/18/2014 at 12:58 PM
+  - 7. With module open-circuited, preconditioning outdoor irradiance of 12.17 kWh/m2
+    starting on 4/25/2014 at 4:25 PM and ending on 4/28/2014 at 9:50 AM, of which
+    0.9 kWh/m2 received on 4/28/2014
+  - 8. At 15°C, measured only with forward I-V curve and not reverse sweep, which
+    may have underestimated performance for this module with high capacitance. Only
+    forward sweep was used because the module was in a transient state having come
+    out of climate chamber and was warming to ambient temperature.
+temp_coeffs:
+  alpha_sc: -0.028758478742617735
+  alpha_mp: -0.10295487255631507
+  beta_oc: -0.31693879619081766
+  beta_mp: -0.4580042564658752
+  gamma_mp: -0.5400862340907295
+sapm_params:
+  Vintage: ''
+  Area: 1.75
+  Material: ''
+  Cells_in_Series: 72
+  Parallel_Strings: 1
+  Isco: 6.06558
+  Voco: 41.6701
+  Impo: 4.74149
+  Vmpo: 29.3889
+  Aisc: -0.000251
+  Aimp: -0.000605
+  C0: 0.957209
+  C1: 0.0427911
+  Bvoco: -0.105408
+  Mbvoc: 0
+  Bvmpo: -0.103824
+  Mbvmp: 0
+  N: 1.6689
+  C2: -0.832765
+  C3: -21.5451
+  A0: 0.876116
+  A1: 0.123995
+  A2: -0.0331954
+  A3: 0.00426439
+  A4: -0.000213224
+  B0: 1
+  B1: -0.00202589
+  B2: 0.000296259
+  B3: -1.29255e-05
+  B4: 2.27912e-07
+  B5: -1.50042e-09
+  DTC: 3
+  FD: 1
+  A: -3.39405
+  B: -0.117213
+  C4: 0.990859
+  C5: 0.0091411
+  IXO: 5.47936
+  IXXO: 3.02632
+  C6: 1.13607
+  C7: -0.136067
+  Notes: Measured at Sandia Labs
+
+
+column,dtype,units
+
+seqno,int64,
+date,datetime64[ns],
+temperature,int64,°C
+irradiance,int64,W/m²
+i_sc,float64,A
+v_oc,float64,V
+i_mp,float64,A
+v_mp,float64,V
+p_mp,float64,W
+
+
+seqno,date,temperature,irradiance,i_sc,v_oc,i_mp,v_mp,p_mp
+
+0,2014-04-28 15:59:36,15,100,0.643,23.97,0.368,11.42,4.2
+1,2014-04-18 15:04:56,25,100,0.644,30.37,0.376,19.38,7.27
+2,2014-04-28 16:23:02,15,200,1.28,32.03,0.736,21.26,15.64
+3,2014-04-18 14:57:11,25,200,1.281,35.4,0.885,24.05,21.29
+4,2014-04-18 14:50:04,25,400,2.546,38.43,1.886,27.9,52.61
+5,2014-04-28 12:47:25,50,400,2.543,35.26,1.866,25.16,46.95
+6,2014-04-18 14:42:41,25,600,3.805,39.78,2.916,28.73,83.77
+7,2014-04-28 12:39:24,50,600,3.804,36.64,2.868,25.82,74.04
+8,2014-04-28 14:07:27,65,600,3.778,34.55,2.823,23.55,66.49
+9,2014-04-18 14:33:16,25,800,5.056,40.64,3.93,28.7,112.8
+10,2014-04-28 12:30:12,50,800,5.059,37.5,3.857,25.81,99.58
+11,2014-04-28 14:00:02,65,800,5.023,35.47,3.77,23.49,88.56
+12,2014-04-18 15:13:43,25,1000,6.294,41.37,4.916,28.59,140.55
+13,2014-04-28 12:21:00,50,1000,6.303,38.12,4.81,25.49,122.62
+14,2014-04-28 13:50:34,65,1000,6.245,36.15,4.65,23.19,107.84
+15,2014-04-18 15:23:26,25,1100,6.905,41.65,5.396,28.44,153.44
+16,2014-04-28 12:57:51,50,1100,6.915,38.53,5.286,25.35,134.0
+17,2014-04-28 13:43:20,65,1100,6.848,36.43,5.116,22.78,116.55

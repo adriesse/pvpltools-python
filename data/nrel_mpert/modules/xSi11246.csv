@@ -1,0 +1,125 @@
+﻿#     This file bundles tabular data and corresponding metadata.
+#     There are three sections separated by pairs of blank lines:
+# 
+#         1. metadata in yaml format
+#         2. column definitions as a csv table
+#         3. data columns as a csv table
+# 
+#     Software to read this file can be found at:
+# 
+#         https://github.com/adriesse/pvpltools-python
+# 
+#     Data in this file were collected by NREL, Sandia Labs and
+#     CFV Solar during 2012-2014; published by NREL in 2014; and
+#     repackaged by Anton Driesse, PV Performance Labs in 2019.
+#     
+
+name: xSi11246
+source: NREL mPERT data set
+source_files:
+- CharacterDataForPVModels 9-26-14.xlsx
+- SandiaModelCoefficients.xlsx
+source_notes:
+  PV Module: xSi11246
+  Technology: Single-crystalline silicon
+  Construction: Glass front/Tedlar back
+  Deployment: Golden, CO - August 14, 2012 through September 24, 2013.
+  History: Previously deployed for 16 months in Golden, CO
+  Footnotes:
+  - 1. Measured with a h.a.l.m. flash solar simulator
+  - 2. Because of equipment limitations the maximum temperature for measurements was
+    65°C instead of 75°C
+  - 3. Measurements for 15°C and irradiances of 400, 600, 800, and 1000 W/m2 were
+    not performed because of equipment limitations and infrequent occurrence of those
+    conditions at the Cocoa, Eugene, and Golden sites.
+  - 4. Raw Isc and Imp data corrected for temperature and irradiance using equation
+    1 of  IEC 60891, raw Voc and Vmp corrected for temperature
+  - '5. Uncertainty for crystalline silicon modules: Pm = ± 2.8%,  Isc = ± 2.3%, Imp
+    = ± 2.3%, Voc = ± 0.3%, Vmp = ± 0.7%'
+  - 6. Initial measurements on 12/12/2013 provided a Pm at STC of 78.7 W. EL image
+    shows cracked cells which likely impacted testing repeatability and resulted in
+    performance significantly lower than its 85W nameplate rating.
+temp_coeffs:
+  alpha_sc: 0.05775
+  alpha_mp: 0.12
+  beta_oc: -0.341
+  beta_mp: -0.412
+  gamma_mp: -0.314
+sapm_params:
+  Vintage: ''
+  Area: 0.647
+  Material: ''
+  Cells_in_Series: 36
+  Parallel_Strings: 1
+  Isco: 4.975
+  Voco: 21.9851
+  Impo: 4.43791
+  Vmpo: 17.3352
+  Aisc: 0.000601
+  Aimp: 0.000686
+  C0: 1.03971
+  C1: -0.0397095
+  Bvoco: -0.072612
+  Mbvoc: 0
+  Bvmpo: -0.071028
+  Mbvmp: 0
+  N: 1.1141
+  C2: -0.20773
+  C3: -11.0406
+  A0: 0.926845
+  A1: 0.0726738
+  A2: -0.018581
+  A3: 0.00213409
+  A4: -9.69657e-05
+  B0: 1
+  B1: -0.00227004
+  B2: 0.000304022
+  B3: -1.26233e-05
+  B4: 2.1431e-07
+  B5: -1.38706e-09
+  DTC: 3
+  FD: 1
+  A: -3.43249
+  B: -0.0967901
+  C4: 1.00559
+  C5: -0.00559205
+  IXO: 4.91332
+  IXXO: 3.17821
+  C6: 1.17246
+  C7: -0.172463
+  Notes: Measured at Sandia Labs
+
+
+column,dtype,units
+
+seqno,int64,
+date,datetime64[ns],
+temperature,int64,°C
+irradiance,int64,W/m²
+i_sc,float64,A
+v_oc,float64,V
+i_mp,float64,A
+v_mp,float64,V
+p_mp,float64,W
+
+
+seqno,date,temperature,irradiance,i_sc,v_oc,i_mp,v_mp,p_mp
+
+0,2014-01-21 15:39:35,15,100,0.504,20.45,0.45,17.06,7.67
+1,2014-01-21 15:26:22,15,200,1.009,21.22,0.926,17.65,16.35
+2,2013-12-30 17:54:31,25,100,0.516,19.6,0.464,16.19,7.52
+3,2013-12-30 17:57:38,25,200,1.025,20.33,0.935,16.78,15.7
+4,2013-12-30 16:27:36,25,400,2.053,21.08,1.866,17.18,32.07
+5,2013-12-30 15:37:32,25,600,3.054,21.49,2.751,17.27,47.52
+6,2013-12-30 14:55:31,25,800,4.062,21.78,3.615,17.26,62.4
+7,2013-12-30 11:28:59,25,1000,5.074,22.01,4.486,17.19,77.12
+8,2013-12-30 13:41:15,25,1100,5.578,22.1,4.892,17.15,83.88
+9,2013-12-31 15:22:19,50,400,2.047,19.15,1.851,15.35,28.41
+10,2013-12-31 15:18:01,50,600,3.077,19.57,2.771,15.45,42.81
+11,2013-12-31 15:14:03,50,800,4.105,19.96,3.644,15.57,56.73
+12,2013-12-31 15:09:43,50,1000,5.134,20.22,4.498,15.53,69.85
+13,2013-12-31 15:06:28,50,1100,5.648,20.36,4.898,15.56,76.22
+14,2013-12-31 15:45:51,65,600,3.095,18.47,2.797,14.41,40.29
+15,2013-12-31 15:51:02,65,800,4.133,18.8,3.708,14.47,53.65
+16,2013-12-31 15:54:46,65,1000,5.177,19.06,4.619,14.41,66.56
+17,2013-12-31 16:00:28,65,1100,5.698,19.16,5.06,14.41,72.92

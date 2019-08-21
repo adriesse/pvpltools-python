@@ -1,0 +1,127 @@
+﻿#     This file bundles tabular data and corresponding metadata.
+#     There are three sections separated by pairs of blank lines:
+# 
+#         1. metadata in yaml format
+#         2. column definitions as a csv table
+#         3. data columns as a csv table
+# 
+#     Software to read this file can be found at:
+# 
+#         https://github.com/adriesse/pvpltools-python
+# 
+#     Data in this file were collected by NREL, Sandia Labs and
+#     CFV Solar during 2012-2014; published by NREL in 2014; and
+#     repackaged by Anton Driesse, PV Performance Labs in 2019.
+#     
+
+name: HIT05667
+source: NREL mPERT data set
+source_files:
+- CharacterDataForPVModels 9-26-14.xlsx
+- SandiaModelCoefficients.xlsx
+source_notes:
+  PV Module: HIT05667
+  Technology: Amorphous silicon/crystalline silicon (HIT)
+  Construction: Glass front/Tedlar back
+  Deployment: Cocoa, FL - January 21, 2011 through March 4, 2012; and  Eugene, OR
+    - December 20, 2012 through January 20, 2014
+  History: New when deployed in Cocoa, FL
+  Footnotes:
+  - 1. Measured with a h.a.l.m. flash solar simulator
+  - 2. Because of equipment limitations the maximum temperature for measurements was
+    65°C instead of 75°C
+  - 3. Measurements for 15°C and irradiances of 400, 600, 800, and 1000 W/m2 were
+    not performed because of equipment limitations and infrequent occurrence of those
+    conditions at the Cocoa, Eugene, and Golden sites.
+  - 4. Raw Isc and Imp data corrected for temperature and irradiance using equation
+    1 of  IEC 60891, raw Voc and Vmp corrected for temperature
+  - '5. Uncertainty for crystalline silicon modules: Pm = ± 2.8%,  Isc = ± 2.3%, Imp
+    = ± 2.3%, Voc = ± 0.3%, Vmp = ± 0.7%'
+  - 6. At 15°C, measured only with forward I-V curve and not reverse sweep, which
+    may have underestimated performance for this module with high capacitance. Only
+    forward sweep was used because the module was in a transient state having come
+    out of climate chamber and was warming to ambient temperature.
+temp_coeffs:
+  alpha_sc: 0.03495206385783449
+  alpha_mp: -0.010832580011176495
+  beta_oc: -0.26667830136344556
+  beta_mp: -0.3372753550120027
+  gamma_mp: -0.34661381923153156
+sapm_params:
+  Vintage: ''
+  Area: 1.26
+  Material: ''
+  Cells_in_Series: 72
+  Parallel_Strings: 1
+  Isco: 5.3747
+  Voco: 50.7105
+  Impo: 5.04798
+  Vmpo: 41.8914
+  Aisc: 0.000437
+  Aimp: 1e-06
+  C0: 1.00402
+  C1: -0.00402141
+  Bvoco: -0.126936
+  Mbvoc: 0
+  Bvmpo: -0.1314
+  Mbvmp: 0
+  N: 1.1001
+  C2: 0.0521894
+  C3: -9.79459
+  A0: 0.878235
+  A1: 0.134908
+  A2: -0.0455904
+  A3: 0.00760803
+  A4: -0.000483007
+  B0: 1
+  B1: -0.00192437
+  B2: 0.000269291
+  B3: -1.19076e-05
+  B4: 2.12862e-07
+  B5: -1.42133e-09
+  DTC: 3
+  FD: 1
+  A: -3.49658
+  B: -0.115965
+  C4: 0.996121
+  C5: 0.00387898
+  IXO: 5.33519
+  IXXO: 3.73609
+  C6: 1.10417
+  C7: -0.104173
+  Notes: Measured at Sandia Labs
+
+
+column,dtype,units
+
+seqno,int64,
+date,datetime64[ns],
+temperature,int64,°C
+irradiance,int64,W/m²
+i_sc,float64,A
+v_oc,float64,V
+i_mp,float64,A
+v_mp,float64,V
+p_mp,float64,W
+
+
+seqno,date,temperature,irradiance,i_sc,v_oc,i_mp,v_mp,p_mp
+
+0,2014-04-17 20:30:23,15,100,0.558,46.74,0.51,40.1,20.47
+1,2014-04-16 15:12:02,25,100,0.57,45.37,0.526,38.39,20.19
+2,2014-04-17 20:31:17,15,200,1.111,48.23,1.013,41.7,42.25
+3,2014-04-16 15:01:52,25,200,1.126,46.9,1.041,40.15,41.79
+4,2014-04-16 14:51:45,25,400,2.232,48.34,2.076,41.01,85.16
+5,2014-04-16 18:39:31,50,400,2.234,44.89,2.059,37.23,76.65
+6,2014-04-16 14:41:56,25,600,3.334,49.17,3.114,41.3,128.58
+7,2014-04-16 18:33:07,50,600,3.329,45.81,3.081,37.77,116.35
+8,2014-04-16 19:48:44,65,600,3.349,43.77,3.074,35.63,109.53
+9,2014-04-16 14:31:16,25,800,4.433,49.76,4.151,41.38,171.76
+10,2014-04-16 18:26:14,50,800,4.441,46.42,4.115,37.94,156.15
+11,2014-04-16 19:42:23,65,800,4.459,44.43,4.106,35.83,147.12
+12,2014-04-16 14:05:43,25,1000,5.532,50.21,5.177,41.43,214.48
+13,2014-04-16 18:15:39,50,1000,5.539,46.9,5.112,38.1,194.79
+14,2014-04-16 19:34:25,65,1000,5.566,44.92,5.119,35.93,183.92
+15,2014-04-16 14:17:58,25,1100,6.079,50.39,5.632,41.52,233.84
+16,2014-04-16 18:54:11,50,1100,6.101,47.11,5.639,37.87,213.58
+17,2014-04-16 19:24:23,65,1100,6.129,45.16,5.604,35.99,201.73
