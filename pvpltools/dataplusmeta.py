@@ -3,19 +3,19 @@
 @author: Anton Driesse, PV Performance Labs
 
 This module contains classes/functions to manage small collections
-of tabular data and corresponding meta data.
+of tabular data and corresponding metadata.
 
 The main class, called DataPlusMeta, bundles the following information:
 
     3. tabular data as a pandas DataFrame
     2. column definitions for the data, also as a pandas DataFrame
-    1. additional meta data in a (possibly nested) dictionary
+    1. additional metadata in a (possibly nested) dictionary
     0. an optional string identifying the data source
 
 Methods are provided for reading and writing text files.  These will
 consist of three mandatory sections:
 
-    1. meta data in yaml format
+    1. metadata in yaml format
     2. column definitions as a csv table
     3. data columns as a csv table
 
@@ -28,7 +28,7 @@ Note on dates and times:
     to identify date/time columns that need parsing when read back in.
 
 Note on YAML:
-    Standard pyyaml does not preserve the layout of the meta data, therefore
+    Standard pyyaml does not preserve the layout of the metadata, therefore
     the package ruamel.yaml is used instead, where available.
 
 DataPlusMeta will probably be extended to read/write in other formats,
@@ -67,6 +67,7 @@ PREAMBLE = \
 '''
 # On second thought, let's not use the preamble.
 PREAMBLE = ''
+UTF8_BOM = u'\uFEFF'
 ENCODING = 'utf-8'
 SECTION_SEPARATOR = '\n\n'
 COMMENT_CHAR = '#'
@@ -84,7 +85,7 @@ TO_CSV_OPTIONS = dict(line_terminator='\n')
 
 class DataPlusMeta():
     """
-    Class to bundle tabular data with meta data, with methods to read
+    Class to bundle tabular data with metadata, with methods to read
     and write files.
     """
 
@@ -101,7 +102,7 @@ class DataPlusMeta():
             operations.)
 
         meta : dict, default=None
-            Dictionary containing any useful (or not) meta data. May contain
+            Dictionary containing any useful (or not) metadata. May contain
             lists and other nested dictionaries.
 
         source : str, default=None
@@ -262,7 +263,7 @@ class DataPlusMeta():
         return cls(data, cdef, meta, source=file)
 
 
-    def to_txt(self, file, update_cdef=True):
+    def to_txt(self, file, update_cdef=True, preamble=None):
         """
         Write the contents of a DataPlusMeta object to a text file.
 
@@ -290,8 +291,12 @@ class DataPlusMeta():
             self.data.index.name = self.cdef.index[0]
 
         with open(file, 'w', encoding=ENCODING) as f:
-            if PREAMBLE:
-                f.write(PREAMBLE)
+            f.write(UTF8_BOM)
+
+            if preamble:
+                lines = preamble.splitlines()
+                for line in lines:
+                    f.write(COMMENT_CHAR + ' ' + line + '\n')
                 f.write(BLANK_LINE)
 
             f.write(yaml.dump(self.meta, default_flow_style=False,
