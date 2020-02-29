@@ -2,6 +2,19 @@
 This module implements the calculations energy rating calculations
 described in standard IEC-61853.
 
+The four main calculation steps are:
+
+    1. Calculate the angle-of-incidence correction using the functions:
+        - martin_ruiz()
+        - martin_ruiz_diffuse()
+    2. Evaluate the spectral factor using the functions:
+        - convert_to_banded()
+        - calc_spectral_factor()
+    3. Estimate the operating temperature using the function:
+        - faiman()
+    4. Determine the module efficiency using the class:
+        - BilinearInterpolator()
+
 Copyright (c) 2019-2020 Anton Driesse, PV Performance Labs.
 """
 
@@ -9,6 +22,189 @@ import numpy as np
 import pandas as pd
 
 from scipy.interpolate import RegularGridInterpolator
+
+__all__ = [
+    'convert_to_banded',
+    'calc_spectral_factor',
+    'BilinearInterpolator',
+    'martin_ruiz',
+    'martin_ruiz_diffuse',
+    'faiman',
+    ]
+
+# This constant defines the fixed boundaries between the 29 spectral bands
+# used in the IEC 61853-4 climate profiles.
+
+SPECTRAL_BAND_EDGES = (
+     306.8,  327.8,  362.5,  407.5,  452.0,  517.7,  540.0,  549.5,
+     566.6,  605.0,  625.0,  666.7,  684.2,  704.4,  742.6,  791.5,
+     844.5,  889.0,  974.9, 1045.7, 1194.2, 1515.9, 1613.5, 1964.8,
+    2153.5, 2275.2, 3001.9, 3635.4, 3991.0, 4605.65
+    )
+
+# This constant defines irradiance of the AM15G spectrum in each of the 29
+# spectral bands used in the IEC 61853-4 climate profiles.
+# NB: the value in the last band represents only the range 3991-4000nm.
+
+BANDED_AM15G = (
+     3.69618,  16.60690,  34.22227,  56.13480, 101.36658,  33.98919,
+    14.45719,  25.91979,  56.57334,  29.05096,  58.35457,  24.50170,
+    25.22513,  45.09050,  52.90410,  52.42015,  42.28474,  47.29518,
+    49.45154,  61.54425,  67.93106,  24.83419,  34.04581,  13.98155,
+     9.11025,   9.07606,   4.22986,   3.04112,   0.06470
+    )
+
+#%%
+
+def convert_to_banded(spectral_reponse):
+    """
+    Calculate the mean spectral reponse in standard wavelength bands.
+
+    The mean value for each band is calculated as the area under the
+    linearly interpolated spectral response (SR) curve between band edges,
+    divided by the width of the band.  The band edges are defined in
+    IEC 61853-4. [1]
+
+    Parameters
+    ----------
+    spectral_reponse : pandas.Series
+        Spectral response.  The index of spectral_reponse must contain
+        wavelengths [nm]; the values in spectral_reponse may be
+        relative or absolute.
+
+    Returns
+    -------
+    np.array
+        Mean values of the spectral_reponse in the specified wavelength bands.
+
+    Notes:
+    ------
+    - The trapezoid method is used to calculate the area under the SR curve.
+    - The SR at the band edges is estimated by linear interpolation.
+    - Negative values in the SR are replaced with zero.
+
+    References
+    ----------
+
+    .. [1] "IEC 61853-4 Photovoltaic (PV) module performance testing and
+       energy rating - Part 4: Standard reference climatic profiles".
+       IEC, Geneva, 2018.
+
+    Author: Anton Driesse, PV Performance Labs
+    """
+    sr = spectral_reponse
+
+    band_edges = SPECTRAL_BAND_EDGES
+
+    # remember these limits for calculating the areas
+    sr_left = sr.index.min()
+    sr_right = sr.index.max()
+
+    # insert extra points into the SR at the band edges
+    extra_wavelengths = set(band_edges) - set(sr.index)
+    sr = sr.append(pd.Series(np.nan, extra_wavelengths))
+    sr = sr.sort_index()
+    sr = sr.clip(0.0)
+    sr = sr.interpolate(method='index', limit_area='inside')
+    sr = sr.fillna(0.0)
+
+    # calculate the mean value of the SR within each band
+    band_means = []
+
+    for band_left, band_right in zip(band_edges[:-1], band_edges[1:]):
+
+        limit_left = max(sr_left, band_left)
+        limit_right = min(sr_right, band_right)
+        band = sr.loc[limit_left:limit_right]
+
+        area = np.trapz(band, band.index)
+        width = band_right - band_left
+        band_means.append(area / width)
+
+    return np.array(band_means)
+
+
+def calc_spectral_factor(banded_irradiance, banded_responsivity):
+    """
+    Calculate the spectral correction/mismatch factor(s) for the given
+    spectral irradiance and device responsivity.
+
+    Parameters
+    ----------
+    banded_irradiance : 1-D or 2-D array_like
+        Spectral irradiance integrated in 29 bands [W/m²].
+
+    banded_responsivity : 1-D array_like
+        Spectral responsivity averaged in 29 bands [unitless].
+
+    Raises
+    ------
+    ValueError
+        If the number of bands in the arguments is incorrect.
+
+    Returns
+    -------
+    scalar or 1-D array
+        The calculated spectral correction factors [unitless].
+
+    See also
+    --------
+    SPECTRAL_BAND_EDGES, BANDED_AM15G, convert_to_banded
+
+    Notes
+    -----
+    The calculation method used here does not correspond precisely to the
+    description in IEC 61853-3 [1] because the latter has inconsistencies.
+    In particular:
+
+    - the standard specifies integration limits of 300 and 4000 nm
+    - the outer edges of the spectral bands in the standard's climate profiles
+      are 306.8 and 4605.65 nm
+    - the AM15G reference spectrum has irradiance values from 280 to 4000 nm
+    - the AM15G reference spectrum must be integrated from 280 nm to
+      infinity to reach the value of 1000 W/m2
+
+    Spectral mismatch calculations require consistency in the limits.
+    In this function all integration limits are set to the band edges
+    306.8 and 3991, and the fixed value of 1000 W/m2 is replaced with the
+    integral of the AM15 spectrum within these limits.  This implies
+    that the last spectral band in the climate files is not used.
+
+    The maximum difference in spectral factor between this simplification
+    and multiple options for imposing a 4000 nm upper limit was
+    found to be < 80 ppm.
+
+    References
+    ----------
+    .. [1] "IEC 61853-3 Photovoltaic (PV) module performance testing and energy
+       rating - Part 3: Energy rating of PV modules". IEC, Geneva, 2018.
+
+    Author: Anton Driesse, PV Performance Labs
+    """
+
+    banded_irradiance = np.asanyarray(banded_irradiance)
+    banded_responsivity = np.asanyarray(banded_responsivity)
+
+    if (banded_irradiance.ndim < 1) or (banded_irradiance.shape[-1] != 29):
+        raise ValueError('banded_irradiance must 29 bands')
+
+    if (banded_responsivity.ndim != 1) or (banded_responsivity.shape[0] != 29):
+        raise ValueError('banded_responsivity must have 29 bands')
+
+    # the mask is used to ignore the last band in all the spectra
+    mask = np.array( 28 * [1] + [0])
+
+    with np.errstate(invalid='ignore'):
+        eta_real = np.sum(mask * banded_irradiance * banded_responsivity, -1) \
+                 / np.sum(mask * banded_irradiance, -1)
+
+        eta_am15 = np.sum(mask * BANDED_AM15G * banded_responsivity) \
+                 / np.sum(mask * BANDED_AM15G)
+
+    spectral_factor = eta_real / eta_am15
+
+    return spectral_factor
+
 
 #%%
 
@@ -344,3 +540,4 @@ def faiman(poa_global, temp_air, wind_speed=1.0, u0=25.0, u1=6.84):
     heat_input = poa_global
     temp_difference = heat_input / total_loss_factor
     return temp_air + temp_difference
+
