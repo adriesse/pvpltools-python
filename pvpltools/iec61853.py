@@ -1,12 +1,8 @@
 """
-This module implements the calculations described in standard IEC-61853.
+This module implements the calculations energy rating calculations
+described in standard IEC-61853.
 
-Three functions that were previously contributed to pvlib-python
-are also included here for convenience.
-
-Copyright 2020 Anton Driesse (@adriesse), PV Performance Labs.
-
-@author: Anton Driesse
+Copyright (c) 2019-2020 Anton Driesse, PV Performance Labs.
 """
 
 import numpy as np
@@ -18,20 +14,18 @@ from scipy.interpolate import RegularGridInterpolator
 
 class BilinearInterpolator(RegularGridInterpolator):
     """
-    Bilinear interpolation and extrapolation of a matrix of values
-    as
+    Bilinear interpolation and extrapolation of a matrix of values.
 
     The values in the matrix are measurements at various combinations
     of irradiance and temperature. The matrix may be completely filled,
-    or there may be missing (nan) values at high irradiance/low temperature,
+    or there may be missing values at high irradiance/low temperature,
     or at low irradiance/high temperature combinations.  These are filled in
     using the method described in [1], which ensures a continuous
-    interpolation/extrapolation surface.  The remaining
+    interpolation/extrapolation surface.
 
     Parameters
     ----------
     matrix : pandas.DataFrame
-
         The row index of matrix must contain irradiance values and
         the column index of matrix must contain temperature values.
         The data in the dataframe can represent anything, but will
@@ -44,7 +38,6 @@ class BilinearInterpolator(RegularGridInterpolator):
 
     Notes
     -----
-
     This class is implemented as a subclass of
     scipy.interpolate.RegularGridInterpolator.  Essentially it ensures the
     regular grid is completely filled, as required, and that the appropriate
@@ -52,7 +45,6 @@ class BilinearInterpolator(RegularGridInterpolator):
 
     Example
     -------
-
     >>> eta = pd.DataFrame(index=[1000, 1100],
     ...                    columns=[15, 25],
     ...                    data=[[  22.0, 20.0],
@@ -78,6 +70,7 @@ class BilinearInterpolator(RegularGridInterpolator):
     .. [3] "IEC 61853-3 Photovoltaic (PV) module performance testing and energy
        rating - Part 3: Energy rating of PV modules". IEC, Geneva, 2018.
 
+    Author: Anton Driesse, PV Performance Labs
     """
 
     def __init__(self, matrix):
@@ -166,8 +159,8 @@ def martin_ruiz(aoi, a_r=0.16):
        analytical model'", Solar Energy Materials & Solar Cells, vol. 110,
        pp. 154, 2013.
 
+    Author: Anton Driesse, PV Performance Labs
     '''
-    # Contributed by Anton Driesse (@adriesse), PV Performance Labs. July, 2019
 
     aoi_input = aoi
 
@@ -247,8 +240,8 @@ def martin_ruiz_diffuse(surface_tilt, a_r=0.16, c1=0.4244, c2=None):
     .. [3] "IEC 61853-3 Photovoltaic (PV) module performance testing and energy
        rating - Part 3: Energy rating of PV modules". IEC, Geneva, 2018.
 
+    Author: Anton Driesse, PV Performance Labs
     '''
-    # Contributed by Anton Driesse (@adriesse), PV Performance Labs. Oct. 2019
 
     if isinstance(surface_tilt, pd.Series):
         out_index = surface_tilt.index
@@ -338,8 +331,8 @@ def faiman(poa_global, temp_air, wind_speed=1.0, u0=25.0, u1=6.84):
     [3] "IEC 61853-3 Photovoltaic (PV) module performance testing and energy
     rating - Part 3: Energy rating of PV modules". IEC, Geneva, 2018.
 
+    Author: Anton Driesse, PV Performance Labs
     '''
-    # Contributed by Anton Driesse (@adriesse), PV Performance Labs. Dec., 2019
 
     # The following lines may seem odd since u0 & u1 are probably scalar,
     # but it serves an indirect and easy way of allowing lists and

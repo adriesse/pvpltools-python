@@ -1,7 +1,5 @@
 """
-Copyright 2020 Anton Driesse (@adriesse), PV Performance Labs.
-
-@author: Anton Driesse
+Copyright (c) 2019-2020 Anton Driesse, PV Performance Labs.
 """
 
 import numpy as np
@@ -9,7 +7,6 @@ import pandas as pd
 
 import pytest
 from numpy.testing import assert_allclose
-from pandas.testing import assert_series_equal
 
 from pvpltools import iec61853
 

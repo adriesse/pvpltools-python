@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
 """
-@author: Anton Driesse, PV Performance Labs
-
 This script demonstrates reading IEC 61853-1 matrix measurements
 stored in the DataPlusMeta format.
 
+Copyright (c) 2019-2020 Anton Driesse, PV Performance Labs.
 """
 
 import numpy as np

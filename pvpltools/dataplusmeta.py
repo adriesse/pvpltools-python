@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
 """
-@author: Anton Driesse, PV Performance Labs
-
 This module contains classes/functions to manage small collections
 of tabular data and corresponding metadata.
 
@@ -34,6 +31,7 @@ Note on YAML:
 DataPlusMeta will probably be extended to read/write in other formats,
 such as hdf5 or native Excel.
 
+Copyright (c) 2019-2020 Anton Driesse, PV Performance Labs.
 """
 
 from warnings import warn
@@ -87,6 +85,8 @@ class DataPlusMeta():
     """
     Class to bundle tabular data with metadata, with methods to read
     and write files.
+
+    Author: Anton Driesse, PV Performance Labs
     """
 
     def __init__(self, data=None, cdef=None, meta=None, source=None):

@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 """
-@author: Anton Driesse, PV Performance Labs
+Copyright (c) 2019-2020 Anton Driesse, PV Performance Labs.
 """
 
 import os
@@ -24,9 +23,6 @@ test_file_data = os.path.join(test_dir, 'data', 'sample_iec_copy2.csv')
 #%%
 
 def test_1():
-    pass
-
-#%%
 
     # read a file
     dpm = DataPlusMeta.from_txt(test_file)
@@ -52,9 +48,6 @@ def test_1():
 #%%
 
 def test_2():
-    pass
-
-#%%
 
     # see what happens when I start with only data and no cdef
 
@@ -86,9 +79,6 @@ def test_2():
 #%%
 
 def test_3():
-    pass
-
-#%%
 
     # test a few different cdef vs data inconsistencies
 
