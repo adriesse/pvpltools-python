@@ -9,9 +9,9 @@ A quick overview:
 
 - pvpltools/
 	- iec61853.py
-		- reliable functions for Climate-Specific Energy Rating (CSER) calculations
+		Reliable functions for Climate-Specific Energy Rating (CSER) calculations.
 		- incident angle modifier for direct and diffuse irradiance
-		- spectral correction/mismatch factor (coming soon)
+		- spectral correction/mismatch factor
 		- module operating temperature
 		- efficiency matrix interpolation/extrapolation
 
@@ -23,6 +23,14 @@ A quick overview:
 		- module measurements, model parameters and other data in DataPlusMeta style
 
 - examples/
+
+Development status
+------------------
+
+2020-02-29
+
+- The main building blocks for the Energy Rating calculation are complete.
+- A higher level function of example script may be coming soon.
 
 
 Copyright
@@ -60,7 +68,7 @@ The contents of this repository have been developed
 before, during or after various projects; as a product or byproduct;
 with funding in whole, in part, or not at all.
 
-I specifically acknowledge Sandia National Labs and the US DOE for
+I would like to acknowledge Sandia National Labs and the US DOE for
 substantial project funding as well encouragement to publish open source code.
 
 I also acknowledge and thank all the contributors to pvlib-python,
