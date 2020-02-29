@@ -9,7 +9,7 @@ A quick overview:
 
 - pvpltools/
 	- iec61853.py
-		Reliable functions for Climate-Specific Energy Rating (CSER) calculations.
+		- reliable functions for Climate-Specific Energy Rating (CSER) calculations
 		- incident angle modifier for direct and diffuse irradiance
 		- spectral correction/mismatch factor
 		- module operating temperature
