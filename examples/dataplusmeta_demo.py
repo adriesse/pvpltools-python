@@ -16,7 +16,7 @@ from pvpltools.dataplusmeta import DataPlusMeta
 #%%
 
 # obtain some matrix data
-dpm = DataPlusMeta.from_txt('data/CS5P-220M.csv')
+dpm = DataPlusMeta.from_txt('data/CS5P-220M.txt')
 name = dpm.meta['name']
 mtx = dpm.data
 
