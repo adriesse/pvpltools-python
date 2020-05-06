@@ -16,9 +16,9 @@ from pvpltools.dataplusmeta import DataPlusMeta
 test_dir = os.path.dirname(os.path.abspath(__file__))
 data_dir = os.path.join(test_dir, 'data')
 
-test_file = os.path.join(test_dir, 'data', 'sample_iec.csv')
-test_file_copy = os.path.join(test_dir, 'data', 'sample_iec_copy.csv')
-test_file_data = os.path.join(test_dir, 'data', 'sample_iec_copy2.csv')
+test_file = os.path.join(test_dir, 'data', 'sample_iec.txt')
+test_file_copy = os.path.join(test_dir, 'data', 'sample_iec_copy.txt')
+test_file_data = os.path.join(test_dir, 'data', 'sample_iec_copy2.txt')
 
 #%%
 
