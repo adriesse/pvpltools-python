@@ -378,7 +378,7 @@ def martin_ruiz(aoi, a_r=0.16):
     return iam
 
 
-def martin_ruiz_diffuse(surface_tilt, a_r=0.16, c1=0.4244, c2=None):
+def martin_ruiz_diffuse(surface_tilt, a_r=0.16, c1=None, c2=None):
     '''
     Determine the incidence angle modifiers (iam) for diffuse sky and
     ground-reflected irradiance using the Martin and Ruiz incident angle model.
@@ -400,7 +400,7 @@ def martin_ruiz_diffuse(surface_tilt, a_r=0.16, c1=0.4244, c2=None):
     c1 : float
         First fitting parameter for the expressions that approximate the
         integral of diffuse irradiance coming from different directions.
-        c1 is given as the constant 4 / 3 / pi (0.4244) in [1]_.
+        If c1 is None, the constant 4 / 3 / pi (~0.4244) is used [1]_.
 
     c2 : float
         Second fitting parameter for the expressions that approximate the
@@ -451,6 +451,10 @@ def martin_ruiz_diffuse(surface_tilt, a_r=0.16, c1=0.4244, c2=None):
 
     surface_tilt = np.where(surface_tilt == 0, zeroang, surface_tilt)
     surface_tilt = np.where(surface_tilt == 180, 180 - zeroang, surface_tilt)
+
+    if c1 is None:
+        # This value is from [1]
+        c1 = 4 / 3 / np.pi
 
     if c2 is None:
         # This equation is from [3] Sect. 7.2
