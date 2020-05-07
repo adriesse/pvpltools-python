@@ -273,7 +273,7 @@ class BilinearInterpolator(RegularGridInterpolator):
 
         m = matrix.sort_index(0).sort_index(1)
 
-        num_iterations = min(m.shape) - 1
+        num_iterations = max(m.shape) - 1
 
         for i in range(num_iterations):
             # extrapolate and fill toward upper right corner of matrix
