@@ -262,9 +262,11 @@ class BilinearInterpolator(RegularGridInterpolator):
 
     References
     ----------
-    .. [1] Anton Driesse "Report title" SAND-20xx forthcoming
-    .. [3] "IEC 61853-3 Photovoltaic (PV) module performance testing and energy
-       rating - Part 3: Energy rating of PV modules". IEC, Geneva, 2018.
+    .. [1] A. Driesse and J. S. Stein, "From IEC 61853 power measurements to
+           PV system simulations," Sandia Report No. SAND2020-3877, 2020.
+    Anton Driesse "Report title" SAND-20xx forthcoming
+    .. [2] "IEC 61853-3 Photovoltaic (PV) module performance testing and energy
+           rating - Part 3: Energy rating of PV modules". IEC, Geneva, 2018.
 
     Author: Anton Driesse, PV Performance Labs
     """
