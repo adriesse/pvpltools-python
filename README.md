@@ -5,7 +5,7 @@ Useful tools for photovoltaics and beyond!
 Latest news
 -----------
 
-2020-11-26: PV module efficiency models and examples are coming soon!
+2020-11-26: Work in progress on PV module efficiency models and examples!
 
 Contents
 --------
@@ -13,10 +13,10 @@ Contents
 A quick overview:
 
 - pvpltools/
-	- module_efficiency.py (coming soon)
+	- module_efficiency.py (work in progress)
 		- a collection of models for PV module efficiency (at MPP)
 		- includes the new ADR model and others
-        - demonstrations in Jupyter Notebook in examples directory
+        - demonstrations in a Jupyter Notebook in examples directory
 	- iec61853.py
 		- reliable functions for Climate-Specific Energy Rating (CSER) calculations
 		- incident angle modifier for direct and diffuse irradiance
@@ -38,6 +38,10 @@ A quick overview:
 
 Development status
 ------------------
+
+2020-11-26
+- The new module `module_efficiency.py` now contains functions for:
+    - the new ADR model
 
 2020-02-29
 
