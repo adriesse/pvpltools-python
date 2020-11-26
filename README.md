@@ -2,12 +2,21 @@
 
 Useful tools for photovoltaics and beyond!
 
+Latest news
+-----------
+
+2020-11-26: PV module efficiency models and examples are coming soon!
+
 Contents
 --------
 
 A quick overview:
 
 - pvpltools/
+	- module_efficiency.py (coming soon)
+		- a collection of models for PV module efficiency (at MPP)
+		- includes the new ADR model and others
+        - demonstrations in Jupyter Notebook in examples directory
 	- iec61853.py
 		- reliable functions for Climate-Specific Energy Rating (CSER) calculations
 		- incident angle modifier for direct and diffuse irradiance
@@ -23,6 +32,9 @@ A quick overview:
 		- module measurements, model parameters and other data in DataPlusMeta style
 
 - examples/
+    - module_efficiency_demo.ipynb (coming soon)
+    - dataplusmeta_demo.py
+
 
 Development status
 ------------------
@@ -51,18 +63,20 @@ Citing
 When referring to this software in either academic or commercial context,
 please use a citation similar to the following:
 
-- A. Driesse, "PV Performance Labs Tools for Python", (2020), GitHub repository,
-  https://github.com/adriesse/pvpltools-python
+- A. Driesse,
+"PV Performance Labs Tools for Python", (2020), GitHub repository,  https://github.com/adriesse/pvpltools-python
 
 When referring to specific functions, docs strings or algorithms,
 please add specifics to the citation.
 
-IEC 61853 efficiency matrix interpolation/extrapolation is discussed extensively
-in the Sandia report SAND2020-3877:
+The following report introduces the new ADR PV module efficiency model
+and compares it to the IEC 61853 efficiency matrix interpolation/extrapolation method as well as several other published models:
 
-- Driesse, Anton, & Stein, Joshua. 
-  _From IEC 61853 power measurements to PV system simulations._ 
-  United States. [doi:10.2172/1615179](https://doi.org/10.2172/1615179). 
+- Driesse, Anton, & Stein, Joshua.
+  "From IEC 61853 power measurements to PV system simulations."
+  SAND2020-3877, Sandia National Laboratories, Albuquerque, NM, 2020. [doi:10.2172/1615179.][102]
+
+[102]: https://pvpmc.sandia.gov/download/7737/
 
 Additional publications related to the contents of pvpltools-python
 will be listed here as they become available.
@@ -94,7 +108,7 @@ If that's not you, then:
  - unzip the contents somewhere on your computer
  - add the directory called `pvpltools-python-master` to your python search path
  - try `import pvpltools`
- 
+
 The doc strings within the code are currently the primary source of documentation.
 
 Feel free to contact me with questions or suggestions though.
