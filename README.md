@@ -5,9 +5,8 @@ Useful tools for photovoltaics and beyond!
 Latest news
 -----------
 
-2020-11-27: Six models and a model fitting function are now available.
+2020-11-27: Six models and a model fitting function are now available, and the example code is coming along nicely too
 
-2020-11-26: Work in progress on PV module efficiency models and examples
 
 Contents
 --------
@@ -35,7 +34,7 @@ A quick overview:
 		- module measurements, model parameters and other data in DataPlusMeta style
 
 - examples/
-    - module_efficiency_demo.ipynb (coming soon)
+    - module_efficiency_demo.ipynb
     - dataplusmeta_demo.py
 
 
@@ -50,6 +49,7 @@ Development status
     - PVGIS
     - MPM5
     - MPM6
+    - fitting any of the models to measurements
 
 2020-02-29
 
