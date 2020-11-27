@@ -5,7 +5,9 @@ Useful tools for photovoltaics and beyond!
 Latest news
 -----------
 
-2020-11-26: Work in progress on PV module efficiency models and examples!
+2020-11-27: Six models and a model fitting function are now available.
+
+2020-11-26: Work in progress on PV module efficiency models and examples
 
 Contents
 --------
@@ -16,6 +18,7 @@ A quick overview:
 	- module_efficiency.py (work in progress)
 		- a collection of models for PV module efficiency (at MPP)
 		- includes the new ADR model and others
+        - also includes a model fitting function
         - demonstrations in a Jupyter Notebook in examples directory
 	- iec61853.py
 		- reliable functions for Climate-Specific Energy Rating (CSER) calculations
@@ -39,14 +42,19 @@ A quick overview:
 Development status
 ------------------
 
-2020-11-26
+2020-11-27
 - The new module `module_efficiency.py` now contains functions for:
     - the new ADR model
+    - HEY
+    - MotherPV
+    - PVGIS
+    - MPM5
+    - MPM6
 
 2020-02-29
 
 - The main building blocks for the Energy Rating calculation are complete.
-- A higher level function of example script may be coming soon.
+- A higher level function of example script may be coming some day.
 
 
 Copyright
