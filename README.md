@@ -5,7 +5,7 @@ Useful tools for photovoltaics and beyond!
 Latest news
 -----------
 
-2020-11-27: Six models and a model fitting function are now available, and the example code is coming along nicely too
+2020-12-02: Seven models and a model fitting function are now available, and the example code shows how to fit them to data and calculate rms error for comparisons. And of course there are nice graphs.
 
 
 Contents
@@ -41,7 +41,7 @@ A quick overview:
 Development status
 ------------------
 
-2020-11-27
+2020-12-02
 - The new module `module_efficiency.py` now contains functions for:
     - the new ADR model
     - HEY
@@ -49,6 +49,7 @@ Development status
     - PVGIS
     - MPM5
     - MPM6
+    - bilinear
     - fitting any of the models to measurements
 
 2020-02-29
