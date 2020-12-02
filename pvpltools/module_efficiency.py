@@ -10,9 +10,13 @@ A function to fit any of these models to measurements is also provided.
 Copyright (c) 2019-2020 Anton Driesse, PV Performance Labs.
 """
 
-import numpy as np
-from scipy.optimize import curve_fit
 import inspect
+
+import numpy as np
+import pandas as pd
+from scipy.optimize import curve_fit
+
+from pvpltools.iec61853 import BilinearInterpolator
 
 
 def fit_efficiency_model(irradiance, temperature, eta, model, p0=None,
@@ -485,4 +489,105 @@ def mpm5(irradiance, temperature, c1, c2, c3, c4):
     Call `mpm6` with one less parameter.  See `mpm6` for more information.
     """
     return mpm6(irradiance, temperature, c1, c2, c3, c4, c6=0.0)
+
+
+def fit_bilinear(irradiance, temperature, eta):
+    """
+    Prepare a bilinear interpolant for module efficiency.
+
+    This function allows the class `pvpltools.iec61853.BilinearInterpolator`
+    to be used in a way that is compatible with other efficiency models
+    in this module.
+
+    Parameters
+    ----------
+    irradiance : non-negative numeric, W/m²
+        The effective irradiance incident on the PV module.
+
+    temperature : numeric, °C
+        The module operating temperature.
+
+    eta : numeric
+        The efficiency of the module at the specified irradiance and
+        temperature.
+
+    Returns
+    -------
+    interpolator : object
+        A callable `BilinearInterpolator` object
+
+    See also
+    --------
+    pvpltools.module_efficiency.bilinear
+    pvpltools.iec61853.BilinearInterpolator
+
+    Notes
+    -----
+    Unlike the other efficiency models, bilinear interpolation only works
+    with a regular grid of measurements.  Missing values at low irradiance
+    high temperature and vice versa are filled using the method described
+    in [1]_ and [2]_.
+
+    References
+    ----------
+    .. [1] A. Driesse and J. S. Stein, "From IEC 61853 power measurements
+       to PV system simulations", Sandia Report No. SAND2020-3877, 2020.
+
+    .. [2] A. Driesse, M. Theristis and J. S. Stein, "A New Photovoltaic
+       Module Efficiency Model for Energy Prediction and Rating",
+       forthcoming.
+
+    Author: Anton Driesse, PV Performance Labs
+    """
+    # (re)construct the matrix as a grid for the BilinearInterpolator
+    data = pd.DataFrame([irradiance, temperature, eta]).T
+    grid = data.pivot(*data.columns)
+
+    # now create the interpolator object
+    interpolator = BilinearInterpolator(grid)
+    return interpolator
+
+
+def bilinear(irradiance, temperature, interpolator):
+    """
+    Calculate PV module efficiency using bilinear interpolation/extrapolation.
+
+    This function allows the class `pvpltools.iec61853.BilinearInterpolator`
+    to be used in a way that is compatible with other efficiency models
+    in this module.
+
+    Parameters
+    ----------
+    irradiance : non-negative numeric, W/m²
+        The effective irradiance incident on the PV module.
+
+    temperature : numeric, °C
+        The module operating temperature.
+
+    interpolator : object
+        A callable `BilinearInterpolator` object
+
+    Returns
+    -------
+    eta : numeric
+        The efficiency of the module at the specified irradiance and
+        temperature.
+
+    See also
+    --------
+    module_efficiency.fit_bilinear
+    pvpltools.iec61853.BilinearInterpolator
+
+    References
+    ----------
+    .. [1] A. Driesse and J. S. Stein, "From IEC 61853 power measurements
+       to PV system simulations", Sandia Report No. SAND2020-3877, 2020.
+
+    .. [2] A. Driesse, M. Theristis and J. S. Stein, "A New Photovoltaic
+       Module Efficiency Model for Energy Prediction and Rating",
+       forthcoming.
+
+    Author: Anton Driesse, PV Performance Labs
+    """
+    return interpolator(irradiance, temperature)
 
