@@ -15,7 +15,7 @@ The four main calculation steps are:
     4. Determine the module efficiency using the class:
         - BilinearInterpolator()
 
-Copyright (c) 2019-2020 Anton Driesse, PV Performance Labs.
+Copyright (c) 2019-2021 Anton Driesse, PV Performance Labs.
 """
 
 import numpy as np
@@ -124,7 +124,8 @@ def convert_to_banded(spectral_reponse):
     return np.array(band_means)
 
 
-def calc_spectral_factor(banded_irradiance, banded_responsivity):
+def calc_spectral_factor(banded_irradiance, banded_responsivity,
+                         integration_limit=None):
     """
     Calculate the spectral correction/mismatch factor(s) for the given
     spectral irradiance and device responsivity.
@@ -136,6 +137,14 @@ def calc_spectral_factor(banded_irradiance, banded_responsivity):
 
     banded_responsivity : 1-D array_like
         Spectral responsivity averaged in 29 bands [unitless].
+
+    integration_limit : integer or None, default None
+        Last spectral band to use for the integrals in the spectral
+        mismatch calculation. When None is specified, the banded_irradiance is
+        integrated over the full available range (29 bands) and the
+        value 1000 W/m² is used for the integrated reference spectrum.
+
+        See Notes section below for further information.
 
     Raises
     ------
@@ -157,27 +166,42 @@ def calc_spectral_factor(banded_irradiance, banded_responsivity):
     description in IEC 61853-3 [1] because the latter has inconsistencies.
     In particular:
 
-    - the standard specifies integration limits of 300 and 4000 nm
-    - the outer edges of the spectral bands in the standard's climate profiles
-      are 306.8 and 4605.65 nm
-    - the AM15G reference spectrum has irradiance values from 280 to 4000 nm
-    - the AM15G reference spectrum must be integrated from 280 nm to
-      infinity to reach the value of 1000 W/m2
+    - The standard specifies the limits of 300 and 4000 nm for integration.
+    - But the outer edges of the spectral bands in the standard climate profile
+      data are 306.8 and 4605.65 nm, and there is no band edge at 4000 nm;
+      therefore, it is not possible to integrate using the specified limits.
 
-    Spectral mismatch calculations require consistency in the limits.
-    In this function all integration limits are set to the band edges
-    306.8 and 3991, and the fixed value of 1000 W/m2 is replaced with the
-    integral of the AM15 spectrum within these limits.  This implies
-    that the last spectral band in the climate files is not used.
+    - The broadband reference irradiance in eq. 6 of [1] is 1000 W/m².
+    - This implies integration limits of 280 nm and infinity for AM15G.
 
-    The maximum difference in spectral factor between this simplification
-    and multiple options for imposing a 4000 nm upper limit was
-    found to be < 80 ppm.
+    - The broadband irradiance in the climate profiles (also used in eq. 6)
+      is equal to the sum of the all 29 spectral irradiance bands.
+    - This implies an integration from 306.8 to 4605.65 nm.
+
+    In this function the lower integration limit is fixed at the band edge
+    306.8 nm. The integral of AM15G over the range 280-306.8 nm is 0.066 W/m²,
+    therefore this choice does not significantly affect the spectral factor.
+
+    The upper integration limit is more relevant since the integral of AM15G
+    from 4000 nm to infinity is 2.53 W/m².
+
+    Using the default option, `integration_limit=None`, eq. 6 is taken at face
+    value and the implied integration limits are used.  This is equivalent
+    to the recommendation in [2].
+
+    It is also possible to set the `integration_limit` to a specific band
+    number, which is then used as upper limit for all four integrals
+    in the mismatch calculation.
+
 
     References
     ----------
     .. [1] "IEC 61853-3 Photovoltaic (PV) module performance testing and energy
        rating - Part 3: Energy rating of PV modules". IEC, Geneva, 2018.
+
+    .. [2] M.Vogt et al "PV module energy rating standard IEC 61853‐3
+       intercomparison and best practice guidelines for implementation
+       and validation", submitted for publication, 2021.
 
     Author: Anton Driesse, PV Performance Labs
     """
@@ -191,17 +215,23 @@ def calc_spectral_factor(banded_irradiance, banded_responsivity):
     if (banded_responsivity.ndim != 1) or (banded_responsivity.shape[0] != 29):
         raise ValueError('banded_responsivity must have 29 bands')
 
-    # the mask is used to ignore the last band in all the spectra
-    mask = np.array( 28 * [1] + [0])
+    # the mask is used to select/ignore bands in all the spectra
+    mask = np.ones(29)
+
+    if integration_limit is None:
+        integrated_am15g = 1000.
+    else:
+        mask[integration_limit:] = 0
+        integrated_am15g = np.sum(mask * BANDED_AM15G)
 
     with np.errstate(invalid='ignore'):
-        eta_real = np.sum(mask * banded_irradiance * banded_responsivity, -1) \
-                 / np.sum(mask * banded_irradiance, -1)
+        uf_real = np.sum(mask * banded_irradiance * banded_responsivity, -1) \
+                / np.sum(mask * banded_irradiance, -1)
 
-        eta_am15 = np.sum(mask * BANDED_AM15G * banded_responsivity) \
-                 / np.sum(mask * BANDED_AM15G)
+        uf_am15 = np.sum(mask * BANDED_AM15G * banded_responsivity) \
+                / integrated_am15g
 
-    spectral_factor = eta_real / eta_am15
+    spectral_factor = uf_real / uf_am15
 
     return spectral_factor
 
