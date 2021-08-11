@@ -39,7 +39,7 @@ from io import StringIO
 import pandas as pd
 
 try:
-    import ruamel.yaml as yaml
+    import ruamel_yaml as yaml
     LOADER = yaml.RoundTripLoader
     DUMPER = yaml.RoundTripDumper
 
