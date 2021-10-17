@@ -5,6 +5,10 @@ Useful tools for photovoltaics and beyond!
 Latest news
 -----------
 
+2021-10-17: New module `power_conversion`, which introduces a function for calculating the ADR inverter model coeffients and more.
+
+2021-08-11: The IEC 61853 spectral factor function has a new option `integration_limit`.  Explanations are provided in the doc string. 
+
 2020-12-02: Seven models and a model fitting function are now available, and the example code shows how to fit them to data and calculate rms error for comparisons. And of course there are nice graphs.
 
 
@@ -14,11 +18,15 @@ Contents
 A quick overview:
 
 - pvpltools/
-	- module_efficiency.py (work in progress)
+	- power_conversion.py (work in progress)
+		- functions related to PV inverters and other power conversion devices
+		
+	- module_efficiency.py
 		- a collection of models for PV module efficiency (at MPP)
 		- includes the new ADR model and others
         - also includes a model fitting function
         - demonstrations in a Jupyter Notebook in examples directory
+	
 	- iec61853.py
 		- reliable functions for Climate-Specific Energy Rating (CSER) calculations
 		- incident angle modifier for direct and diffuse irradiance
