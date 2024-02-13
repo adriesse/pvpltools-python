@@ -4,6 +4,9 @@ Useful tools for photovoltaics and beyond!
 
 Latest news
 -----------
+2024-02-13: More proof that these tools are useful!  The module efficiency functions were put to good use in [this new study by Lelia Deville and her colleagues][101]: 
+
+[101]: https://doi.org/10.1002/pip.3763
 
 2021-10-17: New module `power_conversion`, which introduces a function for calculating the ADR inverter model coeffients and more.
 
